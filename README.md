@@ -2,7 +2,7 @@
 
 _It's a kind of saga._
 
-An implementation of the [saga pattern](https://www.baeldung.com/cs/saga-pattern-microservices) in Clojure.
+In-memory implementation of the [saga pattern](https://www.baeldung.com/cs/saga-pattern-microservices) in Clojure.
 
 ## Usage
 
