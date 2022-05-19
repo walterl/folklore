@@ -54,7 +54,7 @@
   * `:walterl.folklore/failed`: The step that raised an unhandled `java.lang.Exception`.
   * `:walterl.folklore/error`: The exception that was raised by the failing step.
   * `:walterl.folklore/rollbacks`: Sequence of rolled back steps.
-  * `:walterl.folklore/rollback-errors: Unhandled exceptions raised in rollback functions.
+  * `:walterl.folklore/rollback-errors`: Unhandled exceptions raised in rollback functions.
 
   [1]: https://www.baeldung.com/cs/saga-pattern-microservices#1-what-is-saga-architecture-pattern"
   ([steps]
