@@ -73,7 +73,7 @@ Simple example:
 ;;     }
 ```
 
-See [`test/walterl/folklore_test.clj`][./test/walterl/folklore_test.clj] for another, contrived example.
+See [`test/walterl/folklore_test.clj`](./test/walterl/folklore_test.clj#L13=) for another, contrived example.
 
 ### Steps
 
