@@ -139,9 +139,14 @@ progress and error handling. The following keys are be used:
 - Only exceptions of type `java.lang.Exception` or derived – notably **not**
   `java.lang.Throwable` – are handled.
 
-- The same behavior can be modelled with Pedestal-like [interceptors](http://pedestal.io/reference/interceptors), but
-  Folklore includes more of the machinery to keep track of executed steps and 
-  "direction of execution", as [Pedestal puts it](http://pedestal.io/reference/error-handling).
+- The same behavior can be modelled with Pedestal-like [interceptors][p-int]
+  ([and][exo-int] [similar][siep]), but Folklore includes more of the machinery to keep track of
+  executed steps and "direction of execution", as [Pedestal puts it][p-err].
+
+[p-int]: http://pedestal.io/reference/interceptors
+[p-err]: http://pedestal.io/reference/error-handling
+[exo-int]: https://github.com/exoscale/interceptor
+[siep]: https://github.com/metosin/sieppari
 
 ## License
 
