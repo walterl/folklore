@@ -3,7 +3,7 @@
   (:require [org.corfield.build :as bb]))
 
 (def lib 'net.clojars.walterl/folklore)
-(def version "0.1.0-SNAPSHOT")
+(def version "0.2.0-SNAPSHOT")
 
 (defn test "Run the tests." [opts]
   (bb/run-tests opts))
