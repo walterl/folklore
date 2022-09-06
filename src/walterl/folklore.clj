@@ -34,15 +34,15 @@
                       ::failed step-info)))))
 
 (defn reduce-steps
-  "Reduce over `steps` with given initial map value `m`.
+  "Reduce over `steps` with optionally specified initial context map `ctx`.
 
   `steps` should be a sequence of maps, each with a `:step` key, and an
   optional `:rollback` key. The values for both must be a function accepting a
   single argument – a map returned by the preceding step – and returns a map –
   that will be passed to the next step. The first `:step` function will be
-  called with `m`.
+  called with `ctx`.
   
-  `m` defaults to an empty map.
+  `ctx` defaults to an empty map.
 
   If a step fails (throws an error), all `:rollback` functions for steps up to
   and including the failing are called. These _compensating transaction_
@@ -59,7 +59,7 @@
   [1]: https://www.baeldung.com/cs/saga-pattern-microservices#1-what-is-saga-architecture-pattern"
   ([steps]
    (reduce-steps steps {}))
-  ([steps m]
-   (let [{:keys [::error] :as result} (reduce apply-step m steps)]
+  ([steps ctx]
+   (let [{:keys [::error] :as result} (reduce apply-step ctx steps)]
      (cond-> result
        (some? error) (rollback-steps)))))
