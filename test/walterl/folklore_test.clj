@@ -45,7 +45,31 @@
                (::id failed)))
         ;; notice reverse order below, and includes failing step ::update-inventory
         (is (= [::update-inventory ::process-payment ::create-order]
-               (mapv ::id rollbacks)))))
+               (mapv ::id rollbacks)))
+        (testing "with failing rollback"
+          (let [failed-rb-msg "Test rollback failure"
+                steps (assoc-in steps [1 :rollback]
+                                #(throw (ex-info failed-rb-msg {:data %})))
+
+                {:keys [::fl/error ::fl/failed ::fl/rollbacks] :as result}
+                (fl/reduce-steps steps)
+
+                rb-err (-> result ::fl/rollback-errors first)]
+            (is (= failed-rb-msg
+                   (ex-message (:error rb-err))))
+            (is (= (get steps 1)
+                   (:step rb-err)))
+            ;; the rest is similar as for non-failing rollbacks, except the
+            ;; failing rollback's disj isn't performed (because it "failed" :P)
+            (is (= test-error-msg
+                   (ex-message error)))
+            (is (= #{::create-order ::process-payment} ; :steps at the time of error
+                   (-> error ex-data :data :steps)))
+            (is (= ::update-inventory
+                   (::id failed)))
+            ;; notice reverse order below, and includes failing step ::update-inventory
+            (is (= [::update-inventory ::create-order]
+                   (mapv ::id rollbacks)))))))
     (testing "rollback functions are optional"
       (let [steps (-> steps
                       (update 1 dissoc :rollback) ; ::process-payment step
