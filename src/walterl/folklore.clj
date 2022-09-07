@@ -36,17 +36,17 @@
 (defn reduce-steps
   "Reduce over `steps` with optionally specified initial context map `ctx`.
 
-  `steps` should be a sequence of maps, each with a `:step` key, and an
-  optional `:rollback` key. The values for both must be a function accepting a
-  single argument – a map returned by the preceding step – and returns a map –
-  that will be passed to the next step. The first `:step` function will be
+  `steps` is a sequence of maps, each with a `::step` key, and an optional
+  `::rollback` key. The values for both must be a function accepting a single
+  argument – a context map returned by the preceding step – and returns a map,
+  which will be passed to the next step. The first `::step` function will be
   called with `ctx`.
   
   `ctx` defaults to an empty map.
 
-  If a step fails (throws an error), all `:rollback` functions for steps up to
-  and including the failing are called. These _compensating transaction_
-  functions must be [**idempotent** and **retryable**][1].
+  If a step throws, the `::rollback` function for each step, up to and
+  including the throwing step, is called, in reverse order. These _compensating
+  transaction_ functions must be [**idempotent** and **retryable**][1].
 
   The following keys will be used for recording saga progress and error handling:
 
