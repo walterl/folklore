@@ -8,14 +8,14 @@
   (conj (or vect []) x))
 
 (defn- apply-rollback
-  [acc {:keys [::rollback] :as step-info}]
+  [ctx {:keys [::rollback] :as step-info}]
   (if-not (fn? rollback)
-    acc ; should never happen
+    ctx ; should never happen
     (try
-      (-> (rollback acc)
+      (-> (rollback ctx)
           (update ::rollbacks append step-info))
       (catch Exception ex
-        (update acc ::rollback-errors append {::error ex, ::step step-info})))))
+        (update ctx ::rollback-errors append {::error ex, ::step step-info})))))
 
 (defn- rollback-steps
   [{:keys [::succeeded ::failed] :as result}]
@@ -24,12 +24,12 @@
     (reduce apply-rollback result rollbacks)))
 
 (defn- apply-step
-  [acc {:keys [::step] :as step-info}]
+  [ctx {:keys [::step] :as step-info}]
   (try
-    (-> (step acc)
+    (-> (step ctx)
         (update ::succeeded append step-info))
     (catch Exception ex
-      (reduced (assoc acc
+      (reduced (assoc ctx
                       ::error ex
                       ::failed step-info)))))
 
