@@ -3,7 +3,7 @@
 
 (defn- append
   "Appends `x` to `vect`or or empty vector when nil.
-  
+
   This is `conj` but creates a vector for nil `coll`."
   [vect x]
   (conj (or vect []) x))
@@ -70,7 +70,7 @@
   argument – a context map returned by the preceding step – and returns a map,
   which will be passed to the next step. The first `::step` function will be
   called with `ctx`.
-  
+
   `ctx` defaults to an empty map.
 
   If a step throws, the `::rollback` function for each step, up to and
@@ -79,11 +79,11 @@
 
   The following keys will be used for recording saga progress and error handling:
 
-  * `:walterl.folklore/succeeded`: Sequence of successfully completed steps.
-  * `:walterl.folklore/failed`: The step that raised an unhandled `java.lang.Exception`.
-  * `:walterl.folklore/error`: The exception that was raised by the failing step.
-  * `:walterl.folklore/rollbacks`: Sequence of rolled back steps.
-  * `:walterl.folklore/rollback-errors`: Unhandled exceptions raised in rollback functions.
+  * `::succeeded`: Sequence of successfully completed steps.
+  * `::failed`: The step that raised an unhandled `java.lang.Exception`.
+  * `::error`: The exception that was raised by the failing step.
+  * `::rollbacks`: Sequence of rolled back steps.
+  * `::rollback-errors`: Unhandled exceptions raised in rollback functions.
 
   [1]: https://www.baeldung.com/cs/saga-pattern-microservices#1-what-is-saga-architecture-pattern"
   ([steps]
