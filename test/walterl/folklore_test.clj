@@ -1,6 +1,10 @@
 (ns walterl.folklore-test
-  (:require [clojure.test :refer [deftest is testing]]
-            [walterl.folklore :as fl]))
+  (:require
+    [clojure.test :refer [deftest is testing]]
+    [clojure.spec.test.alpha :as stest]
+    [walterl.folklore :as fl]))
+
+(stest/instrument `fl/reduce-steps)
 
 (defn- conj-step
   [step-id]
